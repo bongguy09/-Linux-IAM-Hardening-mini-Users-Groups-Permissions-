@@ -1,0 +1,41 @@
+# Task 2 — Vulnerability Analysis & Remediation Report
+
+## 1. Misconfiguration 1:
+File: /etc/cron.d
+Issue: World-writable permissions (777)
+Fix:
+sudo chmod 700 /etc/cron.d
+sudo chown root:root /etc/cron.d
+✅ Verified with ls -l /etc/cron.d
+
+## 2. Misconfiguration 2:
+File: /etc/sudoers
+Issue: NOPASSWD entries for all users
+Fix:
+Removed "ALL=(ALL) NOPASSWD:ALL"
+Added "ALL=(ALL) ALL" for specific admins only.
+✅ Verified sudo prompt for password.
+
+## 3. Misconfiguration 3:
+File: /etc/shadow
+Issue: Readable by others
+Fix:
+sudo chmod 600 /etc/shadow
+sudo chown root:shadow /etc/shadow
+✅ Verified with ls -l /etc/shadow
+
+---
+
+## 🔍 Evidence:
+- `ls -l` before and after screenshots.
+- `auditd` log entries showing modifications.
+
+---
+
+## ✅ Remediation Checklist:
+
+| Issue Fixed | Verified | Logged |
+|--------------|-----------|--------|
+| /etc/cron.d permissions | ✅ | ✅ |
+| Sudoers policy | ✅ | ✅ |
+| Shadow file security | ✅ | ✅ |
