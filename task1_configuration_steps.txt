@@ -1,0 +1,45 @@
+# Task 1 — Secure User, Group & Permission Configuration
+
+## 1. Create groups
+sudo groupadd admins
+sudo groupadd developers
+sudo groupadd auditors
+
+## 2. Create users
+sudo useradd -m -s /bin/bash -G admins admin1
+sudo useradd -m -s /bin/bash -G developers dev1
+sudo useradd -m -s /bin/bash -G auditors audit1
+
+## 3. Set passwords
+sudo passwd admin1
+sudo passwd dev1
+sudo passwd audit1
+
+## 4. Create shared project folder
+sudo mkdir /project
+sudo chown root:developers /project
+sudo chmod 770 /project
+
+## 5. Configure ACLs for fine control
+sudo setfacl -m g:developers:rwx /project
+sudo setfacl -m g:auditors:r-- /project
+
+## 6. Configure sudoers (least privilege)
+sudo visudo
+# Add lines:
+admin1 ALL=(ALL) ALL
+dev1 ALL=(ALL) /usr/bin/systemctl restart apache2
+audit1 ALL=(ALL) NOPASSWD: /usr/bin/cat /var/log/syslog
+
+## 7. Enable auditing
+sudo apt install auditd -y
+sudo systemctl enable auditd
+sudo systemctl start auditd
+
+## 8. Add audit rules
+sudo auditctl -w /etc/sudoers -p wa
+sudo auditctl -w /etc/passwd -p wa
+
+## 9. Verify configuration
+getfacl /project
+sudo ausearch -f /etc/passwd
