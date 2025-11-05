@@ -43,9 +43,11 @@ It focuses on managing users, groups, and file permissions securely — while id
 - File permissions & ACLs  
 - Sudo security configuration  
 - Auditing & logging with auditd  
-- Detecting and fixing vulnerabilities  
+- Detecting and fixing vulnerabilities
+ ## 📸 Screenshots
 
 
+<img width="553" height="521" alt="Screenshot 2025-11-06 012217" src="https://github.com/user-attachments/assets/8742f3bc-ee72-4fa5-aca7-5baa005cba4a" />
 
 
 
